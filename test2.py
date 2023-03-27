@@ -165,6 +165,7 @@ def _do_apply_group_collaboration_change(group: Union[Group, Collaboration], ser
     response = None
     for service in scim_services:
         scim_object = _lookup_scim_object(service, SCIM_GROUPS, group.identifier)
+        print ("scim object for group: %d", scim_object)
         if deletion:
             # No use to delete the group if the group is unknown in the remote system
             if scim_object:
@@ -272,6 +273,13 @@ class Service:
 class Group:
   def __init__(self):
     self.identifier = "2ff62896-87c8-42ce-96e9-7a8fd95ea523"
+    self.collaboration_memberships = []
+    self.name = "federalists"
+    self.description = "A group to test with"
+    self.global_urn = application_base_url() + "/group/" + self.identifier
+    self.meta = {
+        "location": "/Groups/" + self.name
+    }
 
 group = Group()
 services = [ Service() ]
